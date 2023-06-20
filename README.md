@@ -49,3 +49,32 @@ localhost.		3600	IN	AAAA	::1
 ;; WHEN: Mon Jun 19 22:07:59 EDT 2023
 ;; MSG SIZE  rcvd: 71
 ```
+
+# Roadmap
+
+```
+trashdns/
+├── src/
+│   ├── main.rs  # Today
+│   ├── server/  # Server-related modules
+│   │   ├── mod.rs  # Module declaration
+│   │   ├── server.rs  # Server core logic
+│   │   ├── request_handler.rs  # Handle incoming DNS requests
+│   │   ├── response_builder.rs  # Build DNS responses
+│   │   └── recursive_resolver.rs  # Handles recursive DNS resolution
+│   ├── queries/  # Query handling modules
+│   │   ├── mod.rs  # Module declaration
+│   │   ├── a.rs  # A record query handling
+│   │   ├── ns.rs  # NS record query handling
+│   │   ├── cname.rs  # CNAME record query handling
+│   │   ├── soa.rs  # SOA record query handling
+│   │   ├── ptr.rs  # PTR record query handling
+│   │   ├── mx.rs  # MX record query handling
+│   │   ├── txt.rs  # TXT record query handling
+│   │   ├── aaaa.rs  # AAAA record query handling
+│   │   └── srv.rs  # SRV record query handling
+│   └── utils/  # Miscellaneous utilities
+│       ├── mod.rs  # Module declaration
+│       ├── dns_parser.rs  # DNS parsing utilities
+│       └── dns_serializer.rs  # DNS serialization utilities
+```
