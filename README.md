@@ -5,7 +5,7 @@ Lightweight rust based DNS server. Sort of delicious if you're that type of pand
 # Features
 
 - Basic DNS resolution
-- (Coming soon) Recusrive DNS
+- (Coming soon) Recursive DNS
 
 # Usage
 
