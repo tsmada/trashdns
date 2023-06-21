@@ -1,3 +1,6 @@
+// src/main.rs
+mod server;
+
 use std::net::{Ipv4Addr, Ipv6Addr};
 use std::str::FromStr;
 
@@ -5,12 +8,14 @@ use tokio::net::UdpSocket;
 use trust_dns_proto::op::{Message, Query};
 use trust_dns_proto::rr::{Name, RData, Record};
 use trust_dns_proto::serialize::binary::*;
+use server::recursive_resolver::RecursiveResolver;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Starting DNS server on 53");
     let socket: UdpSocket = UdpSocket::bind("0.0.0.0:53").await?;
     let mut buf: [u8; 512] = [0; 512];
+    let resolver: RecursiveResolver = RecursiveResolver::new().await?;
 
     loop {
         let (amt, src) = socket.recv_from(&mut buf).await?;
@@ -39,6 +44,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     RData::AAAA(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 1)),
                 );
                 response.add_answer(answer_v6);
+            } else {
+                println!("Resolving query {} {}", question.name(), question.query_type());
+                let results: Vec<String> = resolver.resolve(&question.name().to_ascii(), question.query_type()).await?;
+                for result in results {
+                    let answer: Record = Record::from_rdata(question.name().clone(), 3600, RData::CNAME(Name::from_str(&result)?));
+                    response.add_answer(answer);
+                }
             }
 
             let mut res_buf: Vec<u8> = Vec::new();
