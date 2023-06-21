@@ -6,7 +6,7 @@ Lightweight rust based DNS server. Sort of delicious if you're that type of pand
 
 - Basic DNS resolution
 - Recursive DNS
-- (Coming soon) Deployments/daemon
+- Container
 
 # Usage
 
@@ -26,6 +26,7 @@ Send a DNS query to it:
 
 ```
 dig @localhost localhost A +notcp
+dig @localhost google.com +notcp
 ```
 
 Result:
@@ -51,12 +52,26 @@ localhost.		3600	IN	AAAA	::1
 ;; MSG SIZE  rcvd: 71
 ```
 
+# Container usage
+
+## build
+
+```
+docker build -t trashdns .
+```
+
+## run
+
+```
+docker run -p 53:53/udp trashdns
+```
+
 # Roadmap
 
 ```
 trashdns/
 ├── src/
-│   ├── main.rs  # Today
+│   ├── main.rs  # Entrypoint
 │   ├── server/  # Server-related modules
 │   │   ├── mod.rs  # Module declaration
 │   │   ├── server.rs  # Server core logic
