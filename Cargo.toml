@@ -13,3 +13,4 @@ trust-dns-proto = "0.22.0"
 trust-dns-resolver = "0.22.0"
 trust-dns-server = "0.22.1"
 tokio = { version = "1.28.2", features = ["macros", "rt-multi-thread"] }
+async-trait = "0.1.68"

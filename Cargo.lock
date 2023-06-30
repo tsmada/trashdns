@@ -913,6 +913,7 @@ dependencies = [
 name = "trashdns"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "tokio",
  "trust-dns",
  "trust-dns-proto",

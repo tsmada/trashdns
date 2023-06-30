@@ -8,6 +8,7 @@ use tokio::net::UdpSocket;
 use trust_dns_proto::op::{Message, Query};
 use trust_dns_proto::rr::{Name, RData, Record};
 use trust_dns_proto::serialize::binary::*;
+// use server::Server; TODO: wire this up
 use server::recursive_resolver::RecursiveResolver;
 
 #[tokio::main]
@@ -54,6 +55,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
 
             let mut res_buf: Vec<u8> = Vec::new();
+            // compress output to reduce expose packet size
             let mut encoder: BinEncoder<'_> = BinEncoder::new(&mut res_buf);
             response.emit(&mut encoder)?;
             socket.send_to(&res_buf, &src).await?;
